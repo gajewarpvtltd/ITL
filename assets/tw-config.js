@@ -1,0 +1,1 @@
+tailwind.config={theme:{extend:{colors:{ink:'#1a2342',steel:'#e8ebf0',brass:'#d9892b',slate2:'#4a5368'},fontFamily:{head:['"Barlow Condensed"','Arial Narrow','sans-serif'],body:['"IBM Plex Sans"','Arial','sans-serif']}}}};
