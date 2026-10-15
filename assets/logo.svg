@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Instinctive Technologies logo</title>
+  <rect width="64" height="64" rx="8" fill="#1a2342"/>
+  <path d="M11 14h42v9H37v27h-10V23H11z" fill="#fff"/>
+  <path d="M11 41h15v9H11zM38 14h15v9H38z" fill="#d9892b"/>
+</svg>

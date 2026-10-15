@@ -8,7 +8,8 @@ const customers=['Tata Motors','Samvardhana Motherson','Endurance','Pitti Engine
 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const put=(s,h)=>{const e=$(s);if(e)e.innerHTML=h;return e};
-const img=(f,a)=>`<img src="images/${f}" alt="${a}" loading="lazy" class="ph w-full aspect-[4/3] object-cover">`;
+const imageFor=f=>{const name=f.toLowerCase();if(name.includes('cylinder'))return'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=900&q=85';if(name.includes('gauge')||name.includes('relation')||name.includes('leak'))return'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=900&q=85';if(name.includes('cradle')||name.includes('hmc')||name.includes('rotary'))return'https://images.unsplash.com/photo-1567789884554-0b844b597180?auto=format&fit=crop&w=900&q=85';return'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=900&q=85'};
+const img=(f,a)=>`<img src="${imageFor(f)}" alt="${a}" loading="lazy" class="ph w-full aspect-[4/3] object-cover">`;
 
 put('#directors',directors.map(d=>`<div class="border-l-4 border-brass bg-steel p-5"><h3 class="text-2xl font-bold">${d[0]}</h3><p class="font-medium">${d[1]}</p><p class="text-sm text-slate2 mt-1">${d[2]}</p></div>`).join(''));
 const pg=$('#productGrid');if(pg){const n=+(pg.dataset.limit||products.length);pg.innerHTML=products.slice(0,n).map(p=>`<article class="border border-steel bg-white">${img(p[1],p[0])}<h3 class="p-4 text-2xl font-semibold">${p[0]}</h3></article>`).join('')}
@@ -37,7 +38,7 @@ $$('.vm-tab').forEach(b=>b.onclick=()=>{$$('.vm-tab').forEach(x=>x.classList.tog
 /* gallery filter + lightbox (fixtures page) */
 if($('#gallery')){const cats=['All',...new Set(fixtures.map(f=>f[1]))];
 put('#filters',cats.map((c,i)=>`<button data-c="${c}" class="f-btn px-4 py-2 border border-ink font-head text-lg ${i?'':'tab-on'}">${c}</button>`).join(''));
-const draw=c=>put('#gallery',fixtures.filter(f=>c==='All'||f[1]===c).map(f=>`<figure class="bg-white cursor-zoom-in" data-src="images/${f[2]}" data-cap="${f[0]}">${img(f[2],f[0])}<figcaption class="p-4 font-head text-xl">${f[0]}</figcaption></figure>`).join(''));draw('All');
+const draw=c=>put('#gallery',fixtures.filter(f=>c==='All'||f[1]===c).map(f=>`<figure class="bg-white cursor-zoom-in" data-src="${imageFor(f[2])}" data-cap="${f[0]}">${img(f[2],f[0])}<figcaption class="p-4 font-head text-xl">${f[0]}</figcaption></figure>`).join(''));draw('All');
 $('#filters').onclick=e=>{const b=e.target.closest('.f-btn');if(!b)return;$$('.f-btn').forEach(x=>x.classList.toggle('tab-on',x===b));draw(b.dataset.c)};
 const lb=$('#lightbox'),close=()=>lb.classList.replace('flex','hidden');
 $('#gallery').onclick=e=>{const f=e.target.closest('figure');if(!f)return;$('#lbImg').src=f.dataset.src;$('#lbCap').textContent=f.dataset.cap;lb.classList.replace('hidden','flex')};
@@ -45,3 +46,5 @@ $('#lbClose').onclick=close;lb.onclick=e=>{if(e.target===lb)close()};addEventLis
 
 /* enquiry form (contact page) */
 const form=$('#enquiry');if(form)form.onsubmit=async e=>{e.preventDefault();const m=$('#formMsg');try{const r=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}});if(!r.ok)throw 0;form.reset();m.textContent='Thank you. We have received your enquiry and will call you back.'}catch{m.textContent='Could not send. Please call +91-9579121883 or try again.'}};
+
+const careerForm=$('#careerApplication');if(careerForm)careerForm.onsubmit=e=>{e.preventDefault();$('#careerFormMsg').textContent='Online applications are not configured yet. Please call +91 95791 21883 for career enquiries.'};
